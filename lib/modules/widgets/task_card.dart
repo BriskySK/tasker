@@ -3,12 +3,10 @@ import 'package:flutter/material.dart';
 class TaskCard extends StatelessWidget {
   final String title;
   final bool isDone;
-  final Function onToggle;
 
   TaskCard({
     required this.title,
     required this.isDone,
-    required this.onToggle,
   });
 
   @override
@@ -42,8 +40,10 @@ class TaskCard extends StatelessWidget {
           const Spacer(),
           Checkbox(
             value: isDone,
-            onChanged: ()=>onToggle,
             activeColor: Colors.green,
+            onChanged: (bool? value) {
+              false;
+            },
           ),
           const SizedBox(width: 16),
         ],
