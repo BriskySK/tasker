@@ -1,8 +1,8 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'task.g.dart';
+part 'task_model.g.dart';
 
-part 'task.freezed.dart';
+part 'task_model.freezed.dart';
 
 @freezed
 class TaskModel with _$TaskModel {
@@ -16,4 +16,3 @@ class TaskModel with _$TaskModel {
   factory TaskModel.fromJson(Map<String, Object?> json)
   => _$TaskModelFromJson(json);
 }
-// --delete-conflicting-outputs
