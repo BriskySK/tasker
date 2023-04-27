@@ -4,29 +4,18 @@ import 'package:tasker/core/extentions/date_formater.dart';
 import 'package:tasker/core/ui/app_colors.dart';
 
 class TaskDetail extends HookWidget {
-  DateTime? currentDate;
-  final Function selectDateHandler;
+  ValueNotifier<DateTime?> currentDate;
 
-  TaskDetail(this.selectDateHandler, this.currentDate, {Key? key}) : super(key: key);
+
+  TaskDetail(this.currentDate, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     TextEditingController titleController = TextEditingController();
     TextEditingController descController = TextEditingController();
 
-    ValueNotifier<DateTime?> selectedDate= useState(DateTime.now());
+    ValueNotifier<DateTime?> selectedDate = useState(DateTime.now());
 
-    Future<void> _selectDate(BuildContext context) async {
-      final DateTime? picked = await showDatePicker(
-        context: context,
-        initialDate: selectedDate.value!,
-        firstDate: DateTime.now(),
-        lastDate: DateTime(2100),
-      );
-      if (picked != null && picked != selectedDate.value) {
-        selectedDate.value = picked;
-      }
-    }
     return Container(
       color: AppColors.secondaryColor,
       padding: const EdgeInsets.all(8),
@@ -51,20 +40,32 @@ class TaskDetail extends HookWidget {
               OutlinedButton(
                 style: const ButtonStyle(
                     backgroundColor: MaterialStatePropertyAll(AppColors.tertiaryColor)),
-                onPressed: ()async{
+                onPressed: () async {
                   final DateTime? picked = await showDatePicker(
                     context: context,
                     initialDate: selectedDate.value!,
                     firstDate: DateTime.now(),
                     lastDate: DateTime(2100),
+                    builder: (context, child) {
+                      return Theme(
+                        data: Theme.of(context).copyWith(
+                          colorScheme: const ColorScheme.light(
+                            primary: AppColors.secondaryColor,
+                            onPrimary: AppColors.primaryColor,
+                            onSurface: AppColors.secondaryColor,
+                          ),
+                        ),
+                        child: child!,
+                      );
+                    },
                   );
                   if (picked != null && picked != selectedDate.value) {
                     selectedDate.value = picked;
                   }
                 },
                 child: Text(
-                  currentDate != null
-                      ? '${currentDate!.day}.${currentDate!.month}.${currentDate!.year}'
+                  currentDate.value != null
+                      ? '${currentDate.value!.day}.${currentDate.value!.month}.${currentDate.value!.year}'
                       : DateTime.now().toFormattedString.toString(),
                   style: Theme.of(context).textTheme.displayMedium,
                 ),
