@@ -22,7 +22,7 @@ TaskModel _$TaskModelFromJson(Map<String, dynamic> json) {
 mixin _$TaskModel {
   String get title => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
-  DateTime? get dueDate => throw _privateConstructorUsedError;
+  String? get dueDate => throw _privateConstructorUsedError;
   bool get completed => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -37,7 +37,7 @@ abstract class $TaskModelCopyWith<$Res> {
       _$TaskModelCopyWithImpl<$Res, TaskModel>;
   @useResult
   $Res call(
-      {String title, String? description, DateTime? dueDate, bool completed});
+      {String title, String? description, String? dueDate, bool completed});
 }
 
 /// @nodoc
@@ -70,7 +70,7 @@ class _$TaskModelCopyWithImpl<$Res, $Val extends TaskModel>
       dueDate: freezed == dueDate
           ? _value.dueDate
           : dueDate // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+              as String?,
       completed: null == completed
           ? _value.completed
           : completed // ignore: cast_nullable_to_non_nullable
@@ -87,7 +87,7 @@ abstract class _$$_TaskModelCopyWith<$Res> implements $TaskModelCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String title, String? description, DateTime? dueDate, bool completed});
+      {String title, String? description, String? dueDate, bool completed});
 }
 
 /// @nodoc
@@ -118,7 +118,7 @@ class __$$_TaskModelCopyWithImpl<$Res>
       dueDate: freezed == dueDate
           ? _value.dueDate
           : dueDate // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+              as String?,
       completed: null == completed
           ? _value.completed
           : completed // ignore: cast_nullable_to_non_nullable
@@ -144,7 +144,7 @@ class _$_TaskModel implements _TaskModel {
   @override
   final String? description;
   @override
-  final DateTime? dueDate;
+  final String? dueDate;
   @override
   final bool completed;
 
@@ -189,7 +189,7 @@ abstract class _TaskModel implements TaskModel {
   factory _TaskModel(
       {required final String title,
       required final String? description,
-      required final DateTime? dueDate,
+      required final String? dueDate,
       required final bool completed}) = _$_TaskModel;
 
   factory _TaskModel.fromJson(Map<String, dynamic> json) =
@@ -200,7 +200,7 @@ abstract class _TaskModel implements TaskModel {
   @override
   String? get description;
   @override
-  DateTime? get dueDate;
+  String? get dueDate;
   @override
   bool get completed;
   @override

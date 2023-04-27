@@ -2,18 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:tasker/core/extentions/date_formater.dart';
 import 'package:tasker/core/ui/app_colors.dart';
+import 'package:tasker/domain/task_model.dart';
+import 'package:tasker/modules/widgets/task_text_input.dart';
 
 class TaskDetail extends HookWidget {
   ValueNotifier<DateTime?> currentDate;
+  ValueNotifier<List<TaskModel>> tasks;
 
-
-  TaskDetail(this.currentDate, {Key? key}) : super(key: key);
+  TaskDetail(this.currentDate, this.tasks, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     TextEditingController titleController = TextEditingController();
     TextEditingController descController = TextEditingController();
-
     ValueNotifier<DateTime?> selectedDate = useState(DateTime.now());
 
     return Container(
@@ -64,43 +65,26 @@ class TaskDetail extends HookWidget {
                   }
                 },
                 child: Text(
-                  currentDate.value != null
-                      ? '${currentDate.value!.day}.${currentDate.value!.month}.${currentDate.value!.year}'
+                  selectedDate.value != null
+                      ? '${selectedDate.value!.day}.${selectedDate.value!.month}.${selectedDate.value!.year}'
                       : DateTime.now().toFormattedString.toString(),
                   style: Theme.of(context).textTheme.displayMedium,
                 ),
               ),
             ],
+          ),
+          const SizedBox(height: 24),
+          ElevatedButton(
+            onPressed: () {
+              if(tasks.value.isEmpty){
+                tasks.value.add(TaskModel(title:titleController.text, description: descController.text, dueDate: selectedDate.value?.toFormattedString.toString(), completed: false));
+              }
+              print(tasks.value);
+
+            },
+            child: Text('Save'),
           )
         ],
-      ),
-    );
-  }
-}
-
-class TaskTextInput extends StatelessWidget {
-  const TaskTextInput({
-    super.key,
-    required this.widgetController,
-    required this.hint,
-  });
-
-  final TextEditingController widgetController;
-  final String hint;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        color: AppColors.primaryColor,
-      ),
-      child: TextField(
-        decoration: InputDecoration(
-          hintText: hint,
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
-        ),
-        controller: widgetController,
       ),
     );
   }

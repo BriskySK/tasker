@@ -9,7 +9,7 @@ class TaskModel with _$TaskModel {
   factory TaskModel({
     required String title,
     required String? description,
-    required DateTime? dueDate,
+    required String? dueDate,
     required bool completed,
   }) = _TaskModel;
 
