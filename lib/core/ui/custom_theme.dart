@@ -27,14 +27,14 @@ abstract class CustomTheme {
         ),
       ),
       textTheme: const TextTheme(
-        labelSmall: TextStyle(fontSize: 8, fontWeight: FontWeight.normal),
-        labelMedium: TextStyle(fontSize: 12, fontWeight: FontWeight.normal),
-        labelLarge: TextStyle(fontSize: 15, fontWeight: FontWeight.normal),
-        displaySmall: TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
-        displayMedium: TextStyle(fontSize: 24, fontWeight: FontWeight.normal),
-        titleSmall: TextStyle(fontSize: 32, fontWeight: FontWeight.normal),
-        titleMedium: TextStyle(fontSize: 40, fontWeight: FontWeight.normal),
-        titleLarge: TextStyle(fontSize: 48, fontWeight: FontWeight.normal),
+        labelSmall: TextStyle(fontSize: 8, fontWeight: FontWeight.normal, color: AppColors.primaryColor),
+        labelMedium: TextStyle(fontSize: 12, fontWeight: FontWeight.normal, color: AppColors.primaryColor),
+        labelLarge: TextStyle(fontSize: 15, fontWeight: FontWeight.normal, color: AppColors.primaryColor),
+        displaySmall: TextStyle(fontSize: 16, fontWeight: FontWeight.normal, color: AppColors.primaryColor),
+        displayMedium: TextStyle(fontSize: 24, fontWeight: FontWeight.normal, color: AppColors.primaryColor),
+        titleSmall: TextStyle(fontSize: 32, fontWeight: FontWeight.normal, color: AppColors.primaryColor),
+        titleMedium: TextStyle(fontSize: 40, fontWeight: FontWeight.normal, color: AppColors.primaryColor),
+        titleLarge: TextStyle(fontSize: 48, fontWeight: FontWeight.normal, color: AppColors.primaryColor),
       ),
       elevatedButtonTheme: const ElevatedButtonThemeData(
         style: ButtonStyle(

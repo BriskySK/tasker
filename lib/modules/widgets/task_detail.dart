@@ -76,11 +76,25 @@ class TaskDetail extends HookWidget {
           const SizedBox(height: 24),
           ElevatedButton(
             onPressed: () {
-              if(tasks.value.isEmpty){
-                tasks.value.add(TaskModel(title:titleController.text, description: descController.text, dueDate: selectedDate.value?.toFormattedString.toString(), completed: false));
+              if (tasks.value.isEmpty) {
+                tasks.value.add(TaskModel(
+                    title: titleController.value.text,
+                    description: descController.value.text,
+                    dueDate: selectedDate.value!,
+                    completed: false, id: null));
+              }
+              if (tasks.value.isNotEmpty) {
+                var oldValue = tasks.value;
+                var updatedValue = [
+                  ...oldValue,
+                  TaskModel(
+                      title: titleController.value.text,
+                      description: descController.value.text,
+                      dueDate: selectedDate.value!,
+                      completed: false, id: null)
+                ];
               }
               print(tasks.value);
-
             },
             child: Text('Save'),
           )

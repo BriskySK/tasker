@@ -20,9 +20,10 @@ TaskModel _$TaskModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$TaskModel {
+  int? get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
-  String? get dueDate => throw _privateConstructorUsedError;
+  DateTime get dueDate => throw _privateConstructorUsedError;
   bool get completed => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -37,7 +38,11 @@ abstract class $TaskModelCopyWith<$Res> {
       _$TaskModelCopyWithImpl<$Res, TaskModel>;
   @useResult
   $Res call(
-      {String title, String? description, String? dueDate, bool completed});
+      {int? id,
+      String title,
+      String? description,
+      DateTime dueDate,
+      bool completed});
 }
 
 /// @nodoc
@@ -53,12 +58,17 @@ class _$TaskModelCopyWithImpl<$Res, $Val extends TaskModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = freezed,
     Object? title = null,
     Object? description = freezed,
-    Object? dueDate = freezed,
+    Object? dueDate = null,
     Object? completed = null,
   }) {
     return _then(_value.copyWith(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -67,10 +77,10 @@ class _$TaskModelCopyWithImpl<$Res, $Val extends TaskModel>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
-      dueDate: freezed == dueDate
+      dueDate: null == dueDate
           ? _value.dueDate
           : dueDate // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as DateTime,
       completed: null == completed
           ? _value.completed
           : completed // ignore: cast_nullable_to_non_nullable
@@ -87,7 +97,11 @@ abstract class _$$_TaskModelCopyWith<$Res> implements $TaskModelCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String title, String? description, String? dueDate, bool completed});
+      {int? id,
+      String title,
+      String? description,
+      DateTime dueDate,
+      bool completed});
 }
 
 /// @nodoc
@@ -101,12 +115,17 @@ class __$$_TaskModelCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = freezed,
     Object? title = null,
     Object? description = freezed,
-    Object? dueDate = freezed,
+    Object? dueDate = null,
     Object? completed = null,
   }) {
     return _then(_$_TaskModel(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -115,10 +134,10 @@ class __$$_TaskModelCopyWithImpl<$Res>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
-      dueDate: freezed == dueDate
+      dueDate: null == dueDate
           ? _value.dueDate
           : dueDate // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as DateTime,
       completed: null == completed
           ? _value.completed
           : completed // ignore: cast_nullable_to_non_nullable
@@ -131,7 +150,8 @@ class __$$_TaskModelCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_TaskModel implements _TaskModel {
   _$_TaskModel(
-      {required this.title,
+      {required this.id,
+      required this.title,
       required this.description,
       required this.dueDate,
       required this.completed});
@@ -140,17 +160,19 @@ class _$_TaskModel implements _TaskModel {
       _$$_TaskModelFromJson(json);
 
   @override
+  final int? id;
+  @override
   final String title;
   @override
   final String? description;
   @override
-  final String? dueDate;
+  final DateTime dueDate;
   @override
   final bool completed;
 
   @override
   String toString() {
-    return 'TaskModel(title: $title, description: $description, dueDate: $dueDate, completed: $completed)';
+    return 'TaskModel(id: $id, title: $title, description: $description, dueDate: $dueDate, completed: $completed)';
   }
 
   @override
@@ -158,6 +180,7 @@ class _$_TaskModel implements _TaskModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_TaskModel &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.description, description) ||
                 other.description == description) &&
@@ -169,7 +192,7 @@ class _$_TaskModel implements _TaskModel {
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, title, description, dueDate, completed);
+      Object.hash(runtimeType, id, title, description, dueDate, completed);
 
   @JsonKey(ignore: true)
   @override
@@ -187,20 +210,23 @@ class _$_TaskModel implements _TaskModel {
 
 abstract class _TaskModel implements TaskModel {
   factory _TaskModel(
-      {required final String title,
+      {required final int? id,
+      required final String title,
       required final String? description,
-      required final String? dueDate,
+      required final DateTime dueDate,
       required final bool completed}) = _$_TaskModel;
 
   factory _TaskModel.fromJson(Map<String, dynamic> json) =
       _$_TaskModel.fromJson;
 
   @override
+  int? get id;
+  @override
   String get title;
   @override
   String? get description;
   @override
-  String? get dueDate;
+  DateTime get dueDate;
   @override
   bool get completed;
   @override

@@ -7,12 +7,13 @@ part 'task_model.freezed.dart';
 @freezed
 class TaskModel with _$TaskModel {
   factory TaskModel({
+    required int? id,
     required String title,
     required String? description,
-    required String? dueDate,
+    required DateTime dueDate,
     required bool completed,
   }) = _TaskModel;
 
-  factory TaskModel.fromJson(Map<String, Object?> json)
-  => _$TaskModelFromJson(json);
+  factory TaskModel.fromJson(Map<String, Object?> json) => _$TaskModelFromJson(json);
+
 }
