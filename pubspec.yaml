@@ -17,6 +17,7 @@ dependencies:
   flutter_hooks: "0.18.6"
   intl: "0.18.1"
   sqflite: "2.2.8"
+  path_provider: ^2.0.14
   cupertino_icons: ^1.0.2
 
 dev_dependencies:

@@ -1,13 +1,13 @@
-import 'package:tasker/database/db_model.dart';
+import 'package:tasker/domain/db_model.dart';
 
 class Task {
   final int? id;
   final String title;
   final String description;
   final DateTime dueDate;
-  final bool completed;
+  bool completed;
 
-  const Task(
+  Task(
       {this.id,
       required this.title,
       required this.description,
@@ -24,8 +24,8 @@ class Task {
 
   static Task fromJson(Map<String, Object?> json) => Task(
         id: json[TaskFields.id] as int?,
-        title: [TaskFields.title] as String,
-        description: [TaskFields.description] as String,
+        title: json[TaskFields.title] as String,
+        description: json[TaskFields.description] as String,
         dueDate: DateTime.parse(json[TaskFields.dueDate] as String),
         completed: json[TaskFields.completed] == 1,
       );

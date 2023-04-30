@@ -4,6 +4,7 @@ import 'package:tasker/modules/_home_screen.dart';
 import 'core/ui/custom_theme.dart';
 
 void main() {
+WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 

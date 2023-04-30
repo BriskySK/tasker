@@ -1,35 +1,48 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:tasker/core/ui/app_colors.dart';
-import 'package:tasker/database/db.dart';
-import 'package:tasker/database/task.dart';
+import 'package:tasker/database/db_helper.dart';
+import 'package:tasker/domain/task.dart';
 import 'package:tasker/modules/widgets/task_detail.dart';
 import 'package:tasker/modules/widgets/task_list.dart';
 
-import '../domain/task_model.dart';
-
-class HomeScreen extends StatefulHookWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
   createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen>{
-  late List<Task> tasks;
-  Future refresh()async{
-    tasks=await TaskDatabase.instance.readAll();
-  }
+class _HomeScreenState extends State<HomeScreen> {
+  List<Task> tasks = [];
+  bool isLoading = false;
+
   @override
-  void initState(){
+  void initState() {
     super.initState();
     refresh();
     print(tasks);
   }
+
+  @override
+  void dispose() {
+    DbHelper.instance.close();
+    super.dispose();
+  }
+
+  Future refresh() async {
+    setState(() {
+      isLoading = true;
+    });
+    tasks = await DbHelper.instance.readAll();
+    for(var task in tasks){
+    print(task.title);}
+    setState(() {
+      isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    ValueNotifier<List<TaskModel>> tasks = useState([]);
-    ValueNotifier<DateTime?> selectedDate = useState(DateTime.now());
     return SafeArea(
       child: Scaffold(
         appBar: PreferredSize(
@@ -42,41 +55,40 @@ class _HomeScreenState extends State<HomeScreen>{
             ),
             title: const Center(
                 child: Padding(
-                  padding: EdgeInsets.only(top: 16, left: 64),
-                  child: Text('Tasker'),
-                )),
+              padding: EdgeInsets.only(top: 16, left: 64),
+              child: Text('Tasker'),
+            )),
             backgroundColor: AppColors.secondaryColor,
             actions: [
               Padding(
                 padding: const EdgeInsets.only(top: 16, right: 16),
                 child: IconButton(
-                  onPressed: () async {
-                    await showModalBottomSheet(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return TaskDetail(selectedDate, tasks);
-                        });
+                  onPressed: ()  {
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>TaskDetail(tasks)));
                   },
                   icon: const Icon(Icons.add),
                 ),
               )
             ],
           ),
-        ),body: TaskList(tasks),
+        ),
+        body: FutureBuilder(
+            future: DbHelper.instance.readAll(),
+            builder: (BuildContext context, AsyncSnapshot<List<Task>> snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              if (!snapshot.hasData) {
+                const Text(
+                  'No task to display',
+                  style: TextStyle(color: Colors.black),
+                );
+              }
+              return TaskList(tasks);
+            }) /*TaskList(tasks)*/,
       ),
     );
-  }
-}
-class data extends StatefulWidget {
-  const data({Key? key}) : super(key: key);
-
-  @override
-  State<data> createState() => _dataState();
-}
-
-class _dataState extends State<data> {
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
   }
 }
