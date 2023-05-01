@@ -89,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 );
               } else {
-              return TaskList(tasks);}
+              return TaskList(()async{await DbHelper.instance.readAll();},tasks);}
             }) /*TaskList(tasks)*/,
       ),
     );

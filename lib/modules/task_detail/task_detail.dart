@@ -8,8 +8,8 @@ import 'package:tasker/modules/widgets/task_text_input.dart';
 
 class TaskDetail extends StatefulWidget {
   final Task taskData;
-
-  const TaskDetail({required this.taskData, Key? key}) : super(key: key);
+  Function refresh;
+  TaskDetail( this.refresh,{required this.taskData, Key? key}) : super(key: key);
 
   @override
   State<TaskDetail> createState() => _TaskDetailState();
@@ -101,8 +101,8 @@ class _TaskDetailState extends State<TaskDetail> {
                       onPressed: () async {
                         await DbHelper.instance.edit(Task(
                           id: widget.taskData.id,
-                          title: titleController.value.text,
-                          description: descController.value.text ,
+                          title: titleController.value.text==''?widget.taskData.title:titleController.value.text,
+                          description: descController.value.text ==''?widget.taskData.description:descController.value.text,
                           dueDate: widget.taskData.dueDate,
                           completed: widget.taskData.completed,
                         ));

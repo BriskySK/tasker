@@ -5,9 +5,10 @@ import 'package:tasker/domain/task.dart';
 import 'package:tasker/modules/task_detail/task_detail.dart';
 
 class TaskList extends StatefulWidget {
+  Function refresh;
   List<Task> tasks;
 
-  TaskList(this.tasks, {Key? key}) : super(key: key);
+  TaskList(this.refresh,this.tasks, {Key? key}) : super(key: key);
 
   @override
   State<TaskList> createState() => _TaskListState();
@@ -58,7 +59,7 @@ class _TaskListState extends State<TaskList> {
                         ),
                       ),
                       builder: (BuildContext context) {
-                        return TaskDetail(taskData: widget.tasks[index]);
+                        return TaskDetail(widget.refresh,taskData: widget.tasks[index]);
                       });
                 },
                 child: Card(
