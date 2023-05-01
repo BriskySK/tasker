@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:tasker/core/ui/app_colors.dart';
 import 'package:tasker/database/db_helper.dart';
 import 'package:tasker/domain/task.dart';
-import 'package:tasker/modules/widgets/task_detail.dart';
-import 'package:tasker/modules/widgets/task_list.dart';
+import 'package:tasker/modules/create_task/create_task.dart';
+import 'package:tasker/modules/task_list/task_list.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -20,8 +20,8 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     refresh();
-    print(tasks);
   }
+
 
   @override
   void dispose() {
@@ -34,8 +34,6 @@ class _HomeScreenState extends State<HomeScreen> {
       isLoading = true;
     });
     tasks = await DbHelper.instance.readAll();
-    for(var task in tasks){
-    print(task.title);}
     setState(() {
       isLoading = false;
     });
@@ -63,8 +61,10 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: const EdgeInsets.only(top: 16, right: 16),
                 child: IconButton(
-                  onPressed: ()  {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>TaskDetail(tasks)));
+                  onPressed: () {
+                    Navigator.push(
+                        context, MaterialPageRoute(builder: (context) => CreateTask( ()async{await DbHelper.instance.readAll();})));
+                    refresh();
                   },
                   icon: const Icon(Icons.add),
                 ),
@@ -76,17 +76,20 @@ class _HomeScreenState extends State<HomeScreen> {
             future: DbHelper.instance.readAll(),
             builder: (BuildContext context, AsyncSnapshot<List<Task>> snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(),
+                return const Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                return Center(child: Text('Error fetching tasks: ${snapshot.error}'));
+              } else if (snapshot.data!.isEmpty) {
+                return Center(
+                  child: Text(
+                    'So far no tasks :)',
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      color: AppColors.secondaryColor,
+                    ),
+                  ),
                 );
-              }
-              if (!snapshot.hasData) {
-                const Text(
-                  'No task to display',
-                  style: TextStyle(color: Colors.black),
-                );
-              }
-              return TaskList(tasks);
+              } else {
+              return TaskList(tasks);}
             }) /*TaskList(tasks)*/,
       ),
     );

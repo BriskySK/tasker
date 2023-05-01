@@ -1,5 +1,4 @@
 # Tasker
 Mobile app that allows users to create, edit, and delete tasks.
 
-### To rebuild data model use this command
-` flutter pub run build_runner build --delete-conflicting-outputs`
+Developed and tested with Android 13.0 API33 x86_64

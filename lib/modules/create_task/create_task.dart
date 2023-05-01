@@ -4,11 +4,12 @@ import 'package:tasker/core/extentions/date_formater.dart';
 import 'package:tasker/core/ui/app_colors.dart';
 import 'package:tasker/database/db_helper.dart';
 import 'package:tasker/domain/task.dart';
+import 'package:tasker/modules/widgets/task_text_input.dart';
 
-class TaskDetail extends HookWidget {
-  List<Task> tasks;
+class CreateTask extends HookWidget {
+  Function refresh;
 
-  TaskDetail( this.tasks, {Key? key}) : super(key: key);
+  CreateTask(this.refresh,  {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,35 +29,21 @@ class TaskDetail extends HookWidget {
                   IconButton(onPressed: ()=>Navigator.pop(context), icon: const Icon(Icons.chevron_left)),
                   Center(
                       child: Text(
-                    'Create a task',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  )),
+                        'Create a task',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      )),
                 ],
               ),
-              TextField(
-                decoration: InputDecoration(
-                  hintText: 'Title',
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
-                ),
-                controller: titleController,
-              ),
-              // TaskTextInput(widgetController: titleController, hint: 'Title'),
+              TaskTextInput(widgetController: titleController, hint: 'Title'),
               const SizedBox(height: 24),
-              // TaskTextInput(widgetController: descController, hint: 'Description'),
-              TextField(
-                decoration: InputDecoration(
-                  hintText: 'Description',
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
-                ),
-                controller: descController,
-              ),
+              TaskTextInput(widgetController: descController, hint: 'Description'),
               const SizedBox(height: 24),
-
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     'Due to: ',
-                    style: Theme.of(context).textTheme.displayMedium,
+                    style: Theme.of(context).textTheme.displaySmall,
                   ),
                   const SizedBox(width: 16),
                   OutlinedButton(
@@ -97,11 +84,13 @@ class TaskDetail extends HookWidget {
               const SizedBox(height: 24),
               ElevatedButton(
                 onPressed: () async{
-                 await DbHelper.instance.create(Task(
+                  await DbHelper.instance.create(Task(
                       title: titleController.value.text,
                       description: descController.value.text,
                       dueDate: selectedDate.value!,
                       completed: false));
+                  refresh;
+                  Navigator.pop(context);
                 },
                 child: const Text('Save'),
               )
